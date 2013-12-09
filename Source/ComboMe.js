@@ -6,8 +6,11 @@ $.fn.ComboMe = function() {
     })
     .click(function() {   
         var bt = $(this);                        // get the button
-        var menu = $( this ).parent().next();    // get the menu
+        var menu = $( this ).parent().next();    // get the menu (the UL)
         menu.width( bt.width()-3 );              // set the menu width to match the button width
+        
+        // styling        
+        menu.css("position", "absolute");
 
         // for every anchor in the menu bind click to update the button text with the anchor text.
         menu.find("li").each(function( index ) {
@@ -33,5 +36,7 @@ $.fn.ComboMe = function() {
     .buttonset()
     .next()
     .hide()
-    .menu();  
+    .menu();      
+    
 };
+$("#cb").ComboMe();
