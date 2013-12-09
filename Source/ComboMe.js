@@ -39,4 +39,3 @@ $.fn.ComboMe = function() {
     .menu();      
     
 };
-$("#cb").ComboMe();
