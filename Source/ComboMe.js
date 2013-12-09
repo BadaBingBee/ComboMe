@@ -36,6 +36,5 @@ $.fn.ComboMe = function() {
     .buttonset()
     .next()
     .hide()
-    .menu();      
-    
+    .menu();
 };
