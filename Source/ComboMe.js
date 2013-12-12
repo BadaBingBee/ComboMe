@@ -15,29 +15,24 @@ $.widget("nmk.CombobMe", {
     },
     // Create a private method.
     _createButton: function () {
-        this.element.button({ // give the button the down arrow.
+        
+        var ele = this.element;
+        var bt = $(ele); // get the button
+        var menu = $(ele).parent().next(); // get the menu (the UL)
+        
+        ele.button({ // give the button the down arrow.
             text: true,
             icons: {
                 secondary: "ui-icon-triangle-1-s"
             }
         })
         .click(function () {
-            var bt = $(this); // get the button
-            var menu = $(this).parent().next(); // get the menu (the UL)
+            //var bt = $(this); // get the button
+            //var menu = $(this).parent().next(); // get the menu (the UL)
             menu.width(bt.width() - 3); // set the menu width to match the button width
 
             // styling        
             menu.css("position", "absolute");
-
-            // for every anchor in the menu bind click to update the button text with the anchor text.
-            menu.find("li").each(function (index) {
-                var link = $(this).find("a");
-                link.bind("click", function () {
-                    var val = $(this).text();
-                    bt.find("span").text(val);
-                    bt.trigger("changed", val);
-                });
-            });
 
             // position the menu
             menu.show().position({
@@ -51,11 +46,26 @@ $.widget("nmk.CombobMe", {
             });
             return false;
         })
-            .parent()
-            .buttonset()
-            .next()
-            .hide()
-            .menu();
+        .parent()
+        .buttonset()
+        .next()
+        .hide()
+        .menu();
+        
+        // for every anchor in the menu bind click to update the button text with the anchor text.
+        menu.find("li").each(function (index) {
+            var link = $(this).find("a");
+            link.bind("click", function () {
+                var clickVal = $(this).text();
+                var currentVal = bt.find("span:first").text();
+                
+                // only change the text if the value is different.
+                if (currentVal != clickVal) {
+                    bt.find("span").text(clickVal);
+                    bt.trigger("changed", clickVal);    
+                }                    
+            });
+        });        
     }
 });
 }( jQuery ));
