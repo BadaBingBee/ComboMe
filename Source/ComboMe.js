@@ -1,7 +1,7 @@
 (function ( $ ) {
 var startingValue = '';
 
-$.widget("nmk.cbMe", {    
+$.widget("nmk.CombobMe", {    
     _create: function () {
         this._createButton();
         
