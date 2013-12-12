@@ -1,6 +1,8 @@
 (function ( $ ) {
 $.fn.ComboMe = function() {
     
+    var placeholder; 
+    
     this.button({    // give the button the down arrow.
         text: true,
         icons: {secondary: "ui-icon-triangle-1-s"}
@@ -9,6 +11,8 @@ $.fn.ComboMe = function() {
         var bt = $(this);                        // get the button
         var menu = $( this ).parent().next();    // get the menu (the UL)
         menu.width( bt.width()-3 );              // set the menu width to match the button width
+        
+        placeholder = bt.find("span").text();
         
         // styling        
         menu.css("position", "absolute");
