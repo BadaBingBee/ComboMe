@@ -2,18 +2,19 @@
  * First we start off with the closure 
  * Notice that we pass in $ to the closure? 
  * This is so that we can use $ as an alias to jQuery 
- */  
-(function($) {  
-  
-  /* First line defines the name of your widget */  
-  $.widget("ui.ComboMe", {  
-    options: {val: ''},  
-    _create: function() {  
-      var self = this;  
-      self._createCombo();
-      self.options.val = self.element.find("span:first").html();
-    },  
-    _createCombo: function() {  
+ */ (function ($) {
+
+    /* First line defines the name of your widget */
+    $.widget("ui.ComboMe", {
+        options: {
+            val: ''
+        },
+        _create: function () {
+            var self = this;
+            self._createCombo();
+            self.options.val = self.element.find("span:first").html();
+        },
+        _createCombo: function () {
 
             var ele = this.element;
             var bt = $(ele); // get the button
@@ -32,9 +33,9 @@
 
                 // styling        
                 menu.css("position", "absolute");
-
-                // position the menu
-                menu.show().position({
+    
+                // position & hide/show the menu
+                menu.toggle().position({
                     my: "left top",
                     at: "left bottom",
                     of: this
@@ -45,11 +46,11 @@
                 });
                 return false;
             })
-            .parent()
-            .buttonset()
-            .next()
-            .hide()
-            .menu();
+                .parent()
+                .buttonset()
+                .next()
+                .hide()
+                .menu();
 
             // for every anchor in the menu bind click to update the button text with the anchor text.
             menu.find("li").each(function (index) {
@@ -65,20 +66,20 @@
                     }
                 });
             });
-    },  
-    reset: function() {  
-      /* 
-       * This function is designed to be called using "$('#elementId').widgetName('myPublicFunction')" 
-       */  
-        // reset the value to the original starting value.
-        this.element.find("span").html(this.options.val);        
-    },  
-  
-    /* 
-     * It is a good idea to write your own destroy function. The idea behind this is to remove any dom 
-     * changes you have made, or any variables you have left lying around. 
-     * jQuery will deal with removing the instance of the plugin. 
-     */  
-    destroy: function() {}  
-  });  
+        },
+        reset: function () {
+            /* 
+             * This function is designed to be called using "$('#elementId').widgetName('myPublicFunction')" 
+             */
+            // reset the value to the original starting value.
+            this.element.find("span").html(this.options.val);
+        },
+
+        /* 
+         * It is a good idea to write your own destroy function. The idea behind this is to remove any dom 
+         * changes you have made, or any variables you have left lying around. 
+         * jQuery will deal with removing the instance of the plugin. 
+         */
+        destroy: function () {}
+    });
 })(jQuery);
