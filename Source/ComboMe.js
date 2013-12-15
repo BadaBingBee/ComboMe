@@ -16,11 +16,11 @@
                 "font-weight": "normal"
             }
         },
-        /*_setOption: function (key, value) {
+        _setOption: function (key, value) {
             //    console.log(this.options.cssSelected);
             this._super(key, value);
             //console.log(this.options.cssSelected);
-        },*/
+        },
         _create: function () {
             var self = this;
 
@@ -80,7 +80,7 @@
                     var clickValue = $(this).data("value");
                     var clickText = $(this).text();
                     //var currentVal = bt.find("span:first").text();
-                    var currentVal = self.options.value;
+                    var currentVal = bt.data("value")
 
                     // only change the text if the value is different.
                     if (currentVal != clickValue) {
@@ -96,18 +96,15 @@
             var bt = this.element;
             var menu = $(bt).parent().next();
 
-            // Set the text based on the new selection.
             bt.find("span").text(text);
 
-            // Reset the styling of the previously selected item (ie the 'a' withing the li)
-            if ($.trim(this.options.value) != "") {
+            if (this.options.value !== "") {
+                
                 var anchorCurrent = menu.find('li:has(a[data-value="' + this.options.value + '"])').find('a:first');
-                console.log(anchorCurrent);
                 anchorCurrent.css(this.options.cssNormal);
             }
-            console.log(li);
-            // Set the styling of then newly selected item.
-            var anchor = li.find('a:first');            
+
+            var anchor = li.find('a:first');
             anchor.css(this.options.cssSelected);
 
             //var d=this.options["cssSelected"];
