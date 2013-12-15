@@ -2,8 +2,7 @@
  * First we start off with the closure 
  * Notice that we pass in $ to the closure? 
  * This is so that we can use $ as an alias to jQuery 
- */
-(function ($) {
+ */ (function ($) {
 
     /* First line defines the name of your widget */
     $.widget("ui.ComboMe", {
@@ -96,19 +95,19 @@
         _select: function (li, value, text) {
             var bt = this.element;
             var menu = $(bt).parent().next();
-            
+
             // Set the text based on the new selection.
             bt.find("span").text(text);
 
             // Reset the styling of the previously selected item (ie the 'a' withing the li)
             if ($.trim(this.options.value) != "") {
                 var anchorCurrent = menu.find('li:has(a[data-value="' + this.options.value + '"])').find('a:first');
-                anchorCurrent.css( this.options.cssNormal ) ;
+                anchorCurrent.css(this.options.cssNormal);
             }
-            
+
             // Set the styling of then newly selected item.
             var anchor = li.find('a:first');
-            anchor.css( this.options.cssSelected ) ;            
+            anchor.css(this.options.cssSelected);
 
             //var d=this.options["cssSelected"];
             //console.log(d);
