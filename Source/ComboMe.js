@@ -102,11 +102,12 @@
             // Reset the styling of the previously selected item (ie the 'a' withing the li)
             if ($.trim(this.options.value) != "") {
                 var anchorCurrent = menu.find('li:has(a[data-value="' + this.options.value + '"])').find('a:first');
+                console.log(anchorCurrent);
                 anchorCurrent.css(this.options.cssNormal);
             }
-
+            console.log(li);
             // Set the styling of then newly selected item.
-            var anchor = li.find('a:first');
+            var anchor = li.find('a:first');            
             anchor.css(this.options.cssSelected);
 
             //var d=this.options["cssSelected"];
