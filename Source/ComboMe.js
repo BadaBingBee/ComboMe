@@ -7,12 +7,18 @@
     /* First line defines the name of your widget */
     $.widget("ui.ComboMe", {
         options: {
-            val: ''
+            value: '',
+            text: ''
         },
         _create: function () {
             var self = this;
+            
+            // create the jQuery button with dropdown menu.
             self._createCombo();
-            self.options.val = self.element.find("span:first").html();
+            
+            // capture the original starting values.
+            self.options.value = self.element.data("value");
+            self.options.text = self.element.find("span:first").html();
         },
         _createCombo: function () {
 
@@ -33,9 +39,9 @@
 
                 // styling        
                 menu.css("position", "absolute");
-    
-                // position & hide/show the menu
-                menu.toggle().position({
+
+                // position the menu
+                menu.show().position({
                     my: "left top",
                     at: "left bottom",
                     of: this
@@ -56,13 +62,16 @@
             menu.find("li").each(function (index) {
                 var link = $(this).find("a");
                 link.bind("click", function () {
-                    var clickVal = $(this).text();
-                    var currentVal = bt.find("span:first").text();
-
+                    var clickValue = $(this).data("value");
+                    var clickText = $(this).text();
+                    //var currentVal = bt.find("span:first").text();
+                    var currentVal = bt.data("value");
+                    
                     // only change the text if the value is different.
-                    if (currentVal != clickVal) {
-                        bt.find("span").text(clickVal);
-                        bt.trigger("changed", clickVal);
+                    if (currentVal != clickValue) {
+                        bt.data("value", clickValue);
+                        bt.find("span").text(clickText);
+                        bt.trigger("changed", [clickValue, clickText]);
                     }
                 });
             });
@@ -71,8 +80,12 @@
             /* 
              * This function is designed to be called using "$('#elementId').widgetName('myPublicFunction')" 
              */
-            // reset the value to the original starting value.
-            this.element.find("span").html(this.options.val);
+            // reset the text & value to the original starting values.
+
+            var bt = this.element;
+                        
+            $(bt).data("value", this.options.value);
+            bt.find("span").html(this.options.text);
         },
 
         /* 
