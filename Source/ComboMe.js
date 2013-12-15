@@ -86,7 +86,7 @@
         setSelected: function (value) {
             var bt = this.element;  
             var menu = $(bt).parent().next();
-            //console.log(menu);
+            console.log("Rece: "+value);
             //bt.data("value", value);
 
             //var liMatch = $('li:has(a[data-value="' +value+ '"])');
