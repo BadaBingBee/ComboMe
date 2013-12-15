@@ -21,10 +21,10 @@
             self.options.text = self.element.find("span:first").html();
         },
         _createCombo: function () {
-
+            var self = this;
             var ele = this.element;
             var bt = $(ele); // get the button
-            var menu = $(ele).parent().next(); // get the menu (the UL)
+            var menu = $(ele).parent().next(); // get the menu (ie the UL)
 
             ele.button({ // give the button the down arrow.
                 text: true,
@@ -69,21 +69,41 @@
                     
                     // only change the text if the value is different.
                     if (currentVal != clickValue) {
-                        bt.data("value", clickValue);
-                        bt.find("span").text(clickText);
+                        self._select( this, clickValue, clickText );                        
+                        //bt.data("value", clickValue);
+                        //bt.find("span").text(clickText);
                         bt.trigger("changed", [clickValue, clickText]);
                     }
                 });
             });
+        },
+        _select: function (li, value, text) {
+            var bt = this.element;  
+            bt.data("value", value);
+            bt.find("span").text(text);   
+        },
+        setSelected: function (value) {
+            var bt = this.element;  
+            var menu = $(bt).parent().next();
+            //console.log(menu);
+            //bt.data("value", value);
+
+            //var liMatch = $('li:has(a[data-value="' +value+ '"])');
+            var liMatch = menu.find('li:has(a[data-value="' +value+ '"])');
+            var text = $.trim( liMatch.text() );
+            
+            if ( liMatch.length ) {
+                //console.log( text );
+                this._select( liMatch, value, text);
+            }
+                     
         },
         reset: function () {
             /* 
              * This function is designed to be called using "$('#elementId').widgetName('myPublicFunction')" 
              */
             // reset the text & value to the original starting values.
-
-            var bt = this.element;
-                        
+            var bt = this.element;                        
             $(bt).data("value", this.options.value);
             bt.find("span").html(this.options.text);
         },
