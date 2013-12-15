@@ -8,6 +8,7 @@
     $.widget("ui.ComboMe", {
         options: {
             value: '',
+            startValue: '',
             text: '',
             cssSelected: {
                 "font-weight": "bold"
@@ -24,11 +25,13 @@
         _create: function () {
             var self = this;
 
+            self.options.startValue = self.options.value;
+            
             // create the jQuery button with dropdown menu.
             self._createCombo();
 
             // capture the original starting values.
-            //self.options.value = self.element.data("value");
+            //self.options.value = self.element.data("value");            
             self.options.text = $.trim(self.element.find("span:first").html());
             //console.log(self.element.parent().next().find("li:first"));
             //self.options.cssNormal = self.element.parent().next().find("li:first").css();
@@ -99,7 +102,7 @@
             bt.find("span").text(text);
 
             if (this.options.value !== "") {
-                
+
                 var anchorCurrent = menu.find('li:has(a[data-value="' + this.options.value + '"])').find('a:first');
                 anchorCurrent.css(this.options.cssNormal);
             }
@@ -135,6 +138,8 @@
             var bt = this.element;
             //$(bt).data("value", this.options.value);
             bt.find("span").html(this.options.text);
+            this.options.value = this.options.startValue;
+            console.log(this.options.value);
         },
 
         /* 
