@@ -2,23 +2,37 @@
  * First we start off with the closure 
  * Notice that we pass in $ to the closure? 
  * This is so that we can use $ as an alias to jQuery 
- */ (function ($) {
+ */
+(function ($) {
 
     /* First line defines the name of your widget */
     $.widget("ui.ComboMe", {
         options: {
             value: '',
-            text: ''
+            text: '',
+            cssSelected: {
+                "font-weight": "bold"
+            },
+            cssNormal: {
+                "font-weight": "normal"
+            }
         },
+        /*_setOption: function (key, value) {
+            //    console.log(this.options.cssSelected);
+            this._super(key, value);
+            //console.log(this.options.cssSelected);
+        },*/
         _create: function () {
             var self = this;
-            
+
             // create the jQuery button with dropdown menu.
             self._createCombo();
-            
+
             // capture the original starting values.
-            self.options.value = self.element.data("value");
-            self.options.text = self.element.find("span:first").html();
+            //self.options.value = self.element.data("value");
+            self.options.text = $.trim(self.element.find("span:first").html());
+            //console.log(self.element.parent().next().find("li:first"));
+            //self.options.cssNormal = self.element.parent().next().find("li:first").css();
         },
         _createCombo: function () {
             var self = this;
@@ -60,16 +74,18 @@
 
             // for every anchor in the menu bind click to update the button text with the anchor text.
             menu.find("li").each(function (index) {
+
                 var link = $(this).find("a");
+
                 link.bind("click", function () {
                     var clickValue = $(this).data("value");
                     var clickText = $(this).text();
                     //var currentVal = bt.find("span:first").text();
-                    var currentVal = bt.data("value");
-                    
+                    var currentVal = bt.data("value")
+
                     // only change the text if the value is different.
                     if (currentVal != clickValue) {
-                        self._select( this, clickValue, clickText );                        
+                        self._select($(this).parent(), clickValue, clickText);
                         //bt.data("value", clickValue);
                         //bt.find("span").text(clickText);
                         bt.trigger("changed", [clickValue, clickText]);
@@ -78,34 +94,46 @@
             });
         },
         _select: function (li, value, text) {
-            var bt = this.element;  
-            //bt.data("value", value);
-            alert(text);
-            bt.find("span").text(text);   
+            var bt = this.element;
+            var menu = $(bt).parent().next();
+            
+            bt.find("span").text(text);
+
+            
+            if (this.options.value) {
+                var anchorCurrent = menu.find('li:has(a[data-value="' + this.options.value + '"])').find('a:first');
+                anchorCurrent.css( this.options.cssNormal ) ;
+            }
+            
+            var anchor = li.find('a:first');
+            anchor.css( this.options.cssSelected ) ;            
+
+            //var d=this.options["cssSelected"];
+            //console.log(d);
+            //var d={color:"red"};
+            //$(anchor).css( d );
+            //$(anchor).css( this.options.cssSelected );
+            this.options.value = value;
         },
         setSelected: function (value) {
-            var bt = this.element;  
+            var bt = this.element;
             var menu = $(bt).parent().next();
-            console.log("Rece: "+value);
-            //bt.data("value", value);
+            var liMatch = menu.find('li:has(a[data-value="' + value + '"])');
 
-            //var liMatch = $('li:has(a[data-value="' +value+ '"])');
-            var liMatch = menu.find('li:has(a[data-value="' +value+ '"])');
-            console.log(liMatch);
-            var text = $.trim( liMatch.text() );
-            
-            if ( liMatch.length ) {
+            var text = $.trim(liMatch.text());
+
+            if (liMatch.length) {
                 //console.log( text );
-                this._select( liMatch, value, text);
+                this._select(liMatch, value, text);
             }
-                     
+
         },
         reset: function () {
             /* 
              * This function is designed to be called using "$('#elementId').widgetName('myPublicFunction')" 
              */
             // reset the text & value to the original starting values.
-            var bt = this.element;                        
+            var bt = this.element;
             //$(bt).data("value", this.options.value);
             bt.find("span").html(this.options.text);
         },
