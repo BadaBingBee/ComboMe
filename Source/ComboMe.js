@@ -79,7 +79,8 @@
         },
         _select: function (li, value, text) {
             var bt = this.element;  
-            bt.data("value", value);
+            //bt.data("value", value);
+            alert(text);
             bt.find("span").text(text);   
         },
         setSelected: function (value) {
@@ -104,7 +105,7 @@
              */
             // reset the text & value to the original starting values.
             var bt = this.element;                        
-            $(bt).data("value", this.options.value);
+            //$(bt).data("value", this.options.value);
             bt.find("span").html(this.options.text);
         },
 
