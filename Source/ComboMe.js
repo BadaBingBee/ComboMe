@@ -91,6 +91,7 @@
 
             //var liMatch = $('li:has(a[data-value="' +value+ '"])');
             var liMatch = menu.find('li:has(a[data-value="' +value+ '"])');
+            console.log(liMatch);
             var text = $.trim( liMatch.text() );
             
             if ( liMatch.length ) {
