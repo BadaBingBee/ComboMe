@@ -1,5 +1,5 @@
 ComboMe
 =======
-http://jsfiddle.net/w7H9X/1/
+Use This: http://jsfiddle.net/w7H9X/14/
 <br>
-http://jsfiddle.net/M5pxJ/43/
+Outdated: http://jsfiddle.net/M5pxJ/43/
