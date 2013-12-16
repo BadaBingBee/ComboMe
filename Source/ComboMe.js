@@ -10,11 +10,16 @@
             value: '',
             startValue: '',
             text: '',
+            cssButton: {
+                "text-align": "left",
+                "outline": "none",               
+                "background": "white"                            
+            },
             cssSelected: {
-                "font-weight": "bold"
+                "font-weight": "bold"    
             },
             cssNormal: {
-                "font-weight": "normal"
+                "font-weight": "normal",
             }
         },
         _setOption: function (key, value) {
@@ -33,7 +38,12 @@
             // capture the original starting values.
             //self.options.value = self.element.data("value");            
             self.options.text = $.trim(self.element.find("span:first").html());
-            //console.log(self.element.parent().next().find("li:first"));
+            
+            var parentDiv = self.element.parent();
+            var bt = parentDiv.find("button");            
+            //console.log();
+            bt.css(self.options.cssButton);
+            parentDiv.css("display", "inline-block");
             //self.options.cssNormal = self.element.parent().next().find("li:first").css();
             return self;
         },
@@ -102,12 +112,14 @@
             
             bt.find("span").text(text);
 
+            // reset the style of the previously selected item first.
             if (this.options.value !== "") {
 
                 var anchorCurrent = menu.find('li:has(a[data-value="' + this.options.value + '"])').find('a:first');
                 anchorCurrent.css(this.options.cssNormal);
             }
 
+            // Highlight the style of the newly selected item.
             var anchor = li.find('a:first');
             anchor.css(this.options.cssSelected);
 
