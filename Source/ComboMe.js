@@ -35,6 +35,7 @@
             self.options.text = $.trim(self.element.find("span:first").html());
             //console.log(self.element.parent().next().find("li:first"));
             //self.options.cssNormal = self.element.parent().next().find("li:first").css();
+            return self;
         },
         _createCombo: function () {
             var self = this;
@@ -98,7 +99,7 @@
         _select: function (li, value, text) {
             var bt = this.element;
             var menu = $(bt).parent().next();
-
+            
             bt.find("span").text(text);
 
             if (this.options.value !== "") {
@@ -120,6 +121,12 @@
         setSelected: function (value) {
             var bt = this.element;
             var menu = $(bt).parent().next();
+
+            if( value === null || value === '' ) {
+                this.reset();
+                return;   
+            }
+
             var liMatch = menu.find('li:has(a[data-value="' + value + '"])');
 
             var text = $.trim(liMatch.text());
@@ -128,7 +135,6 @@
                 //console.log( text );
                 this._select(liMatch, value, text);
             }
-
         },
         reset: function () {
             /* 
