@@ -22,10 +22,8 @@
                 "font-weight": "normal",
             }
         },
-        _setOption: function (key, value) {
-            //    console.log(this.options.cssSelected);
-            this._super(key, value);
-            //console.log(this.options.cssSelected);
+        _setOption: function (key, value) {            
+            this._super(key, value);            
         },
         _create: function () {
             var self = this;
@@ -36,12 +34,11 @@
             self._createCombo();
 
             // capture the original starting values.
-            //self.options.value = self.element.data("value");            
             self.options.text = $.trim(self.element.find("span:first").html());
             
             var parentDiv = self.element.parent();
             var bt = parentDiv.find("button");            
-            //console.log();
+            
             bt.css(self.options.cssButton);
             parentDiv.css("display", "inline-block");
             //self.options.cssNormal = self.element.parent().next().find("li:first").css();
@@ -108,8 +105,9 @@
         },
         _select: function (li, value, text) {
             var bt = this.element;
-            var menu = $(bt).parent().next();
+            var menu = $(bt).parent().next();        // the ul
             
+            // get the span of the button
             bt.find("span").text(text);
 
             // reset the style of the previously selected item first.
@@ -139,12 +137,14 @@
                 return;   
             }
 
+            // find the li for the selected value
             var liMatch = menu.find('li:has(a[data-value="' + value + '"])');
 
-            var text = $.trim(liMatch.text());
-
             if (liMatch.length) {
-                //console.log( text );
+                // get the text for the selected value
+                var text = $.trim(liMatch.text());
+                
+                // do the resuable selection tasks.
                 this._select(liMatch, value, text);
             }
         },
@@ -152,12 +152,18 @@
             /* 
              * This function is designed to be called using "$('#elementId').widgetName('myPublicFunction')" 
              */
-            // reset the text & value to the original starting values.
+            // reset the text & value & style to the original starting values.
             var bt = this.element;
-            //$(bt).data("value", this.options.value);
+            var menu = $(bt).parent().next();       // the ul
+            
+            // reset the button text & value to originals.
             bt.find("span").html(this.options.text);
             this.options.value = this.options.startValue;
-            console.log(this.options.value);
+                        
+            // reset the style for all of li items to the original style.
+            var anchorAll = menu.find('li:has(a)').find('a:first');
+            anchorAll.css(this.options.cssNormal);
+            //console.log(anchorAll);
         },
 
         /* 
